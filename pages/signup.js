@@ -1,7 +1,8 @@
+import Link from 'next/link'
 
 const SignUp = () => {
     return (
-        <div className="container">
+        <div className="container sign-up-mode">
             <div className="forms-container">
                 <div className="signin-signup">
                     <form action="#" className="sign-up-form">
@@ -39,22 +40,19 @@ const SignUp = () => {
             </div>
 
             <div className="panels-container">
+                <div className="panel left-panel"></div>
                 <div className="panel right-panel">
                     <div className="content">
                         <h3>One of us ?</h3>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-                            laboriosam ad deleniti.
+                            Then Sign In and get Started!
                         </p>
-                        <button className="btn transparent" id="sign-in-btn">
-                            Login
-                        </button>
+                        <Link href="/login"><a><button className="btn transparent" id="sign-in-btn">LogIn</button></a></Link>
                     </div>
-                    <img src="img/register.svg" className="image" alt="" />
+                    <img src="/register.svg" className="image" alt=""/>
                 </div>
             </div>
         </div>
-        
     );
 }
  
