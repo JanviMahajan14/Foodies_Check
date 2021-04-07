@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-async function initDB () {
+const initDB = async() => {
     if (mongoose.connections[0].readyState) {
         console.log('Already Connected!')
         return
