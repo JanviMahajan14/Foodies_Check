@@ -6,7 +6,7 @@ const Home = ({ items }) => {
 
   const itemList = items.map((item) => {
     return (
-      <Card style={{
+      <Card key={item._id} style={{
         border: "1px solid #bdbdbd",
         boxShadow:"none",
         maxWidth: 250,
@@ -31,11 +31,11 @@ const Home = ({ items }) => {
           </div>
           <div style={{ marginTop: "10px" }}>
             <Button className="btn2" color="primary" >
-              <i class="fa fa-minus-circle fa-lg" aria-hidden="true" />
+              <i className="fa fa-minus-circle fa-lg" aria-hidden="true" />
             </Button>
             2
             <Button className="btn2" color="primary" >
-              <i class="fa fa-plus-circle fa-lg" aria-hidden="true" />
+              <i className="fa fa-plus-circle fa-lg" aria-hidden="true" />
             </Button>
           </div>
           <Button variant="contained" style={{
