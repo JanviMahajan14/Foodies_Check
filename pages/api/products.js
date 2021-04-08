@@ -9,7 +9,10 @@ export default async(req, res) => {
             await getAllProducts(req,res)
             break
         case "POST":
-            await postProduct(req,res);
+            await postProduct(req,res)
+            break
+        case "DELETE":
+            await deleteProduct(req, res)
             break
     }
 }
@@ -40,6 +43,20 @@ const postProduct = async(req,res) => {
         })
         await item.save()
         res.send(item);
+    }
+    catch (error) {
+        res.statusCode = 400;
+        res.send({ error: error.message })
+    }
+}
+
+const deleteProduct = async (req, res) => {
+    try {
+        const item = await Product.findOneAndDelete({ name : req.body.name })
+        if (!item) {
+            return res.status(400).send({ error: "No such item available" })
+        }
+        res.send(item)
     }
     catch (error) {
         res.statusCode = 400;
