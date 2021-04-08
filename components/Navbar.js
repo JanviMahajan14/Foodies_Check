@@ -34,7 +34,7 @@ const Navbar = () => {
               className={classes.title}
               style={{ fontFamily: "Merriweather Sans, sans-serif", flexGrow: "1" }}
             >
-              Foodies Check
+            <Link href="/"><a>Foodies Check</a></Link>
             </Typography>
             <Link href="/signup"><a><Button color="inherit">Signup</Button></a></Link>
             <Link href="/login"><a><Button color="inherit">Login</Button></a></Link>
