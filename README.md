@@ -1,6 +1,9 @@
-# Welcome to Foodies Check:yum:
+# Welcome to Foodies Check! :yum:
 
-Foodies Check is an online platform to order your favorite food by avoiding the hassle of going out or paying in cash. This project is an initiative to digitalize the nearby food stores at Shri Mata Vaishno Devi University. In the times of COVID-19 where social distancing is such an important measure,we think our website can help restaurants and customers.
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/built-by-developers.svg)](https://forthebadge.com)
+
+Foodies Check is an online platform to order your favorite food by avoiding the hassle of going out or paying in cash. This project is an initiative to digitalize the nearby food stores at Shri Mata Vaishno Devi University. In the times of COVID-19 where social distancing is such an important measure, we think our website can help restaurants and customers.
 
 ## Tech Stack :woman_technologist:
 
