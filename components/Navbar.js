@@ -38,7 +38,8 @@ const Navbar = () => {
             </Typography>
             <Link href="/signup"><a><Button color="inherit">Signup</Button></a></Link>
             <Link href="/login"><a><Button color="inherit">Login</Button></a></Link>
-            <Link href="/create"><a><Button color="inherit">Create</Button></a></Link>
+            <Link href="/add_item"><a><Button color="inherit">Add Items</Button></a></Link>
+            <Link href="/delete_item"><a><Button color="inherit">Delete Items</Button></a></Link>
           </Toolbar>
         </AppBar>
       </div>
