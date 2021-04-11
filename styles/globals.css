@@ -412,3 +412,15 @@ form.sign-in-form {
     left: 50%;
   }
 }
+
+.fullPage{
+  height: 100vh;
+  align-content: center;
+  color: #0062d1;
+  text-align: center;
+  background-image: url("https://user-images.githubusercontent.com/46385227/114036312-990d3880-989d-11eb-8095-92ea9b7087ea.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+}

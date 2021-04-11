@@ -1,6 +1,8 @@
 const NotFound = () => {
     return (
-        <h1>What are you looking for ?</h1>
+        <div className="fullPage">
+			<h1>What are you looking for?</h1>
+		</div>
     );
 }
  
