@@ -49,6 +49,7 @@ const Navbar = () => {
                 <Link href="/cart"><a><Button color="inherit">Cart</Button></a></Link>
                 <Button color="inherit" onClick={(e) => {
                   destroyCookie(null, 'token')
+                  destroyCookie(null, 'role')
                   router.push('/login')
                 }}>Logout</Button>
               </>
