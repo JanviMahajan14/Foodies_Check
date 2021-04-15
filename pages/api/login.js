@@ -18,11 +18,12 @@ export default async (req, res) => {
       
     const doMatch = await bcrypt.compare(password, user.password);
     if (!doMatch) {
-        return res.status(400).send({ error: "Incoorect email or password" });
+        return res.status(400).send({ error: "Incorrect email or password" });
     }
-      
+    
     const token = jwt.sign({ _id: user._id }, "pizza1234");
-      res.send({ token })
+    const { role } = user
+    res.send({ token, user : { role } })
   }
   catch (error) {
     res.statusCode = 400;

@@ -32,6 +32,7 @@ const LogIn = () => {
           throw new Error(data.error);
         }
         cookie.set("token",data.token)
+        cookie.set("role",data.user.role)
         toast.success("Login Successful", {
           position: toast.POSITION.TOP_RIGHT,
         });
