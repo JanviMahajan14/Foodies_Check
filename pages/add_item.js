@@ -1,6 +1,11 @@
 import { useState } from 'react'
 import { Button, Icon } from '@material-ui/core'
-import SendIcon  from '@material-ui/icons/Send'
+import SendIcon from '@material-ui/icons/Send'
+import baseUrl from '../utils/baseUrl'
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+toast.configure();
+
 
 const styles = {
     container: {
@@ -43,13 +48,56 @@ const AddItem = () => {
     const [ price, setPrice ] = useState("")
     const [ isVeg, setIsVeg ] = useState(true)
     const [mediaUrl, setMediaUrl] = useState("")
+
+    const uploadImage = async () => {
+        try {
+            const formData = new FormData();
+            formData.append('file', mediaUrl);
+            formData.append('upload_preset', "Instagram-Clone");
+            formData.append('cloud_name', "smilingcloud");
+
+            const response = await fetch("https://api.cloudinary.com/v1_1/smilingcloud/image/upload", {
+                method: "post",
+                body: formData
+            })
+
+            const data = await response.json();
+            if (data.error) {
+                throw new Error(data.error.message);
+            }
+            return data.url
+        }
+        catch (error) {
+            toast.error(error.message, { position: toast.POSITION.TOP_RIGHT });
+        }
+    }
     
-    const handleSubmit = (e)=>{
-        e.preventDefault()
-        console.log(name)
-        console.log(price)
-        console.log(isVeg)
-        console.log(mediaUrl)
+    const handleSubmit = async (e) => {
+        try {
+            e.preventDefault()
+            const media = await uploadImage()
+            const res = await fetch(`${baseUrl}api/products`, {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name,
+                    price,
+                    isVeg,
+                    mediaUrl:media
+                })
+            })
+            const data = await res.json();
+            if (data.error) {
+                throw new Error(data.error);
+            }
+            toast.success('Item added successfully!', { position: toast.POSITION.TOP_RIGHT })
+        }
+        catch (error) {
+            toast.error(error.message, { position: toast.POSITION.TOP_RIGHT });
+        }
     }
 
     return (

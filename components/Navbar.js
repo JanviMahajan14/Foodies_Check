@@ -1,7 +1,9 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, Toolbar, Typography, Button, IconButton} from "@material-ui/core";
 import RestaurantIcon from '@material-ui/icons/Restaurant';
+import { parseCookies, destroyCookie } from "nookies";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = () => {
     const classes = useStyles();
+    const router = useRouter();
+    const { token } = parseCookies();
+    const user = token ? true : false
+  
     return (
       <div className={classes.root}>
         <AppBar position="static" style={{ background: "#1565c0" }}>
@@ -36,8 +42,23 @@ const Navbar = () => {
             >
             <Link href="/"><a>Foodies Check</a></Link>
             </Typography>
-            <Link href="/signup"><a><Button color="inherit">Signup</Button></a></Link>
-            <Link href="/login"><a><Button color="inherit">Login</Button></a></Link>
+            {user
+              ?
+              <>
+                <Link href="/account"><a><Button color="inherit">Account</Button></a></Link>
+                <Link href="/cart"><a><Button color="inherit">Cart</Button></a></Link>
+                <Button color="inherit" onClick={(e) => {
+                  destroyCookie(null, 'token')
+                  destroyCookie(null, 'role')
+                  router.push('/login')
+                }}>Logout</Button>
+              </>
+              :
+              <>
+                <Link href="/signup"><a><Button color="inherit">Signup</Button></a></Link>
+                <Link href="/login"><a><Button color="inherit">Login</Button></a></Link>
+              </>
+            }
             <Link href="/add_item"><a><Button color="inherit">Add Items</Button></a></Link>
             <Link href="/delete_item"><a><Button color="inherit">Delete Items</Button></a></Link>
           </Toolbar>

@@ -39,7 +39,7 @@ const MenuList = ({ items }) => {
                 padding: '20px',
                 borderBottom: '1px solid blue',
                 justifyContent: 'space-around'
-            }}>
+            }} key={item._id}>
                 <img src={item.mediaUrl} width="100px" height="100px"/>
                 <p>{item.name}</p>
                 <DeleteIcon style={{ color: "red", fontSize: 40 }} onClick={()=>handleDeleteItem(item.name)} />
