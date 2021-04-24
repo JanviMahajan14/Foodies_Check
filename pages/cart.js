@@ -1,3 +1,4 @@
+import baseUrl from '../utils/baseUrl'
 import { parseCookies } from "nookies";
 
 const Cart = () => {
@@ -6,17 +7,18 @@ const Cart = () => {
     );
 }
 
-export async function getServerSideProps(ctx) {
-  const { token } = parseCookies(ctx);
-  if (!token) {
-    const { res } = ctx;
-    res.writeHead(302, { Location: "/login" });
-    res.end();
-  }
-
+export async function getserverSideProps (ctx){
+  const (token) = parseCookies(ctx) 
+  const res = await fetch(`${baseUrl}/api/cart`,{
+    headers: {
+      "Authorization":token
+    }
+  })
+  const products = await res.json() 
+  console.log("products", products) 
   return {
-    props: {},
-  };
+    props: (products}
+  }
 }
  
 export default Cart;
