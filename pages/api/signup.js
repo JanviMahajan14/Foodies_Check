@@ -10,7 +10,7 @@ export default async (req, res) => {
         const { name, email, password } = req.body;
         if (!name || !email || !password) {
             return res.status(400).send({ error: "Please fill all the fields" })
-        }
+    }
     const user = await User.findOne({ email })
     if (user) {
         return res.status(400).send({ error: "User already exists" });
@@ -22,7 +22,7 @@ export default async (req, res) => {
         password:hashedPassword
         }).save()
         res.send(newUser)
-        await new Cart({user:newuser. id)).save()
+        await new Cart({user:newuser. id}).save()
     }
     catch (error) {
       res.statusCode = 400;
