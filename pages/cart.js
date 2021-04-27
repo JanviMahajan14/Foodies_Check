@@ -1,15 +1,22 @@
 import baseUrl from '../utils/baseUrl'
-import { parseCookies } from "nookies";
-import cookie from 'js-cookie'
-import {useRouter} from 'next/router'
+import { parseCookies, destroyCookie  } from "nookies";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+toast.configure();
 
-const Cart = ({error}) => {
-  const router = useRouter
+const handleLogin = async () => {
+  const router = useRouter();
+  router.push('/login');
+}
+
+const Cart = ({ error }) => {
+
   if(error){
-      M.toast({html:error,classes:"red"})
-      cookie.remove("user")
-      cookie.remove("token")
-      router.push('/login')
+    toast.error(error, { position: toast.POSITION.TOP_RIGHT });
+    destroyCookie(null, 'token')
+    destroyCookie(null, 'role')
+    handleLogin()
   }
 
   return (
@@ -17,27 +24,28 @@ const Cart = ({error}) => {
   );
 }
 
-export async function getserverSideProps (ctx){
-  const {token} = parseCookies(ctx) 
-  if(!token){
-    return {
-      props: {products}
-    }
+export async function getServerSideProps(ctx) {
+  const { token } = parseCookies(ctx) 
+  if (!token) {
+    const { res } = ctx
+    res.writeHead(302, { Location: "/login" })
+    res.end()
   }
-  const res = await fetch(`${baseUrl}/api/cart`,{
+
+  const res = await fetch(`${baseUrl}api/cart`,{
     headers: {
-      "Authorization":token
+      'Authorization' : token
     }
   })
   const products = await res.json() 
   if(products.error){
-    return{
-      props:{error:products.error}
+    return {
+      props:{ error:products.error }
     }
   }
   console.log("products", products) 
   return {
-    props: {products}
+    props: { products }
   }
 }
  

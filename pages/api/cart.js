@@ -1,17 +1,18 @@
 import jwt from 'jsonwebtoken'
+import Cart from '../../models/cart'
 
-export default async (req,res) => {
-	const {authorization} = req.headers
+export default async (req, res) => {
+	const { authorization } = req.headers
 	if(!authorization){
-		return res.status(401).json({error:"you must log in"})
+		return res.status(400).send({error: "you must log in"})
 	}
 
-	try{
-		const { _id} = jwt.verify(authorization,process.env.JWT_SECRET)
-		 const cart = await cart.findOne ({user:_id})
-		 res.status(200).json(cart.products)
+	try {
+		const { _id } = jwt.verify(authorization, "pizza1234")
+		const cart = await Cart.findOne({ user: _id })
+		res.send(cart.products)
 	}
-	catch(err){
-		return res.status(401).json({error:"you must log in"})
+	catch(error){
+		return res.status(400).send({ error })
 	}
 }
