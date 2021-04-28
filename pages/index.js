@@ -1,8 +1,40 @@
+import { useRouter } from 'next/router'
 import { Card, Typography, CardContent, Icon, Button } from '@material-ui/core'
 import AdjustIcon from '@material-ui/icons/Adjust'
 import baseUrl from '../utils/baseUrl'
+import { parseCookies } from "nookies";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+toast.configure();
+
+
+const addToCart = async ( productId ) => {
+  try {
+    const { token } = parseCookies();
+    const res = await fetch(`${baseUrl}api/cart`, {
+      method: "PUT",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization' : token
+      },
+      body: JSON.stringify({
+        quantity: 1,
+        productId
+      })
+    })
+    const data = await res.json();
+    toast.success('Item added Successfully!', { position: toast.POSITION.TOP_RIGHT })
+  }
+  catch (error) {
+    toast.error("Unable to add in cart", { position: toast.POSITION.TOP_RIGHT });
+  }
+}
 
 const Home = ({ items }) => {
+  const { token } = parseCookies();
+  const router = useRouter();
+  const user = token ? true : false  
 
   const itemList = items.map((item) => {
     return (
@@ -33,21 +65,31 @@ const Home = ({ items }) => {
             <Button className="btn2" color="primary" >
               <i className="fa fa-minus-circle fa-lg" aria-hidden="true" />
             </Button>
-            2
+            1
             <Button className="btn2" color="primary" >
               <i className="fa fa-plus-circle fa-lg" aria-hidden="true" />
             </Button>
           </div>
-          <Button variant="contained" style={{
-            backgroundColor: "#039be5",
-            color: "white",
-            fontFamily: "Merriweather Sans, sans-serif",
-            marginTop: "10px",
-            display: "block",
-            width:"100%"
-          }}>
-          Add
-          </Button>
+          {user
+            ?
+            <Button variant="contained" style={{
+              backgroundColor: "#039be5",
+              color: "white",
+              fontFamily: "Merriweather Sans, sans-serif",
+              marginTop: "10px",
+              display: "block",
+              width: "100%"
+            }} onClick={(e)=>{ addToCart(item._id) }}> Add </Button>
+            :
+              <Button variant="contained" style={{
+                backgroundColor: "#039be5",
+                color: "white",
+                fontFamily: "Merriweather Sans, sans-serif",
+                marginTop: "10px",
+                display: "block",
+                width: "100%"
+              }} onClick={(e)=>{ router.push('/login') }}> Login to Shop! </Button>
+          }
         </CardContent>
       </Card>
     )
