@@ -24,7 +24,7 @@ const addToCart = async ( productId ) => {
       })
     })
     const data = await res.json();
-    toast.success('Item added Successfully!', { position: toast.POSITION.TOP_RIGHT })
+    toast.success('Item added to Cart!', { position: toast.POSITION.TOP_RIGHT })
   }
   catch (error) {
     toast.error("Unable to add in cart", { position: toast.POSITION.TOP_RIGHT });
