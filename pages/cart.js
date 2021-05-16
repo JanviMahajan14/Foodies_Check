@@ -1,6 +1,8 @@
 import baseUrl from '../utils/baseUrl'
+import { Button } from '@material-ui/core'
 import { parseCookies, destroyCookie } from "nookies";
 import DeleteIcon from '@material-ui/icons/Delete';
+import StripeCheckout from "react-stripe-checkout";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -43,7 +45,29 @@ const Cart = ({ error, products, token }) => {
     }
   }
 
+  const handleCheckout = async (paymentInfo) => {
+    const res = await fetch(`${baseUrl}api/payment`, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: JSON.stringify({
+        paymentInfo
+      })
+    })
+    const data = await res.json();
+    console.log(data)
+    toast.success("Payment Succesfull!", {
+       position: toast.POSITION.TOP_RIGHT,
+    });
+    await router.push("/account");
+  }
+
+  let price = 0;
   const cartItems = products.map((item) => {
+    price = price + item.product.price
     return (
       <div style={{
         display: 'flex',
@@ -78,6 +102,31 @@ const Cart = ({ error, products, token }) => {
         />
       </h2>
       {cartItems}
+      <div>
+        <h3> Total Price : {price}</h3>
+        {products.length != 0 &&
+          <StripeCheckout
+            name="Foodies Check."
+            description="Food items"
+            ComponentClass="div"
+            amount={price * 100}
+            shippingAddress={true}
+            billingAddress={true}
+            zipCode={true}
+            currency="INR"
+            stripeKey="pk_test_51IqxVLSI1jyc9zs6odTKQr3GoGl76rlPgOxqvoJm6zHBUDYiz0YR3P6I3I8qOHbgBpL5JBiI7fTmuA629wr9SDYO008EuZvwpi"
+            locale="en"
+            token={(paymentInfo) => handleCheckout(paymentInfo)}
+          >
+
+            <Button variant="contained" color="secondary" style={{
+              color: "white",
+              fontFamily: "Merriweather Sans, sans-serif",
+              marginTop: "10px",
+            }}> Checkout </Button>
+          </StripeCheckout >
+        }
+      </div>
     </div>
   );
 }
