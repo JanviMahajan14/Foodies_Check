@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = () => {
     const classes = useStyles();
     const router = useRouter();
-    const { token } = parseCookies();
+    const { token,role } = parseCookies();
     const user = token ? true : false
   
     return (
@@ -47,6 +47,12 @@ const Navbar = () => {
               <>
                 <Link href="/account"><a><Button color="inherit">Account</Button></a></Link>
                 <Link href="/cart"><a><Button color="inherit">Cart</Button></a></Link>
+                {(role == "admin" || role == "root") &&
+                  <>
+                    <Link href="/add_item"><a><Button color="inherit">Add Items</Button></a></Link>
+                    <Link href="/delete_item"><a><Button color="inherit">Delete Items</Button></a></Link>
+                  </>
+                }
                 <Button color="inherit" onClick={(e) => {
                   destroyCookie(null, 'token')
                   destroyCookie(null, 'role')
@@ -59,8 +65,6 @@ const Navbar = () => {
                 <Link href="/login"><a><Button color="inherit">Login</Button></a></Link>
               </>
             }
-            <Link href="/add_item"><a><Button color="inherit">Add Items</Button></a></Link>
-            <Link href="/delete_item"><a><Button color="inherit">Delete Items</Button></a></Link>
           </Toolbar>
         </AppBar>
       </div>

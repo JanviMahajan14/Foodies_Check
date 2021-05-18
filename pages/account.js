@@ -1,24 +1,25 @@
 import { parseCookies } from 'nookies'
 import baseUrl from '../utils/baseUrl'
 import Collapsible from "react-collapsible";
+import UserRoles from '../components/UserRoles'
 
 const Account = ( { orders } ) => {
     const cookie = parseCookies()
     const user = cookie.role ? cookie.role : ""
-    if (orders.length == 0) {
-        return (
-            <div
-                    style={{
-                      border: "2px solid blue",
-                      fontSize: "20px",
-                      margin: "25px",
-                      cursor : 'pointer',
-                      padding : '20px',
-                      color: 'red'
-                    }}
-            ><h3>You don't have any Order History !</h3></div>
-        )
-    }
+    // if (orders.length == 0) {
+    //     return (
+    //         <div
+    //                 style={{
+    //                   border: "2px solid blue",
+    //                   fontSize: "20px",
+    //                   margin: "25px",
+    //                   cursor : 'pointer',
+    //                   padding : '20px',
+    //                   color: 'red'
+    //                 }}
+    //         ><h3>You don't have any Order History !</h3></div>
+    //     )
+    // }
     
     const OrderHistory = () => {
         return (
@@ -70,7 +71,8 @@ const Account = ( { orders } ) => {
                     height='70px'
                 />
             </h2>
-            { OrderHistory() }
+            {OrderHistory()}
+            {user == "root" && <UserRoles />}
         </div>
     );
 }
